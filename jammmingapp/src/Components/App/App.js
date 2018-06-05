@@ -5,6 +5,8 @@ import SearchResults from '../SearchResults/SearchResults.js';
 import Playlist from '../Playlist/Playlist.js';
 import Spotify from '../../util/Spotify';
 
+Spotify.getAccessToken();
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,11 +24,16 @@ class App extends React.Component {
     this.search = this.search.bind(this);
   };
 
+
+    // Adds track to playlist in app
+
     addTrack(track) {
       if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
         return;
       }
     };
+
+    // Removes track from playlist
 
     removeTrack(track) {
       this.setState({
@@ -34,11 +41,15 @@ class App extends React.Component {
       });
     }
 
+    // Updates name of playlist
+
     updatePlaylistName(name) {
       this.setState({
         playlistName: name 
       })
     }
+
+    // Saves playlist and merges savePlaylist from Spotify.js
 
     savePlaylist() {
       let trackURIs = this.state.playlistTracks.map(playlistTrack => playlistTrack.uri);
@@ -53,7 +64,6 @@ class App extends React.Component {
         }));
       }
  
-
   render() {
     return (
       <div>

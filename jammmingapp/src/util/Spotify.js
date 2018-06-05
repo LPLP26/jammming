@@ -1,10 +1,13 @@
 const clientId = 'd83b111261b44fae9d81879a4cc8bec8';
-const redirectUri = "http://localhost:3000/";
+const redirectUri = "http://lpjammming.surge.sh/";
 const spotifyUrl = `https://accounts.spotify.com/authorize?response_type=token&scope=playlist-modify-public&client_id=${clientId}&redirect_uri=${redirectUri}`;
 let accessToken = '';
 let expiresIn = 0;
 
 const Spotify = {
+
+    // Method to get access token
+
     getAccessToken() {
         if (accessToken) {
             return accessToken;
@@ -22,6 +25,8 @@ const Spotify = {
             window.location = spotifyUrl;
         }
     },
+
+    // Takes search term and request response from Spotify API
 
     search(term) {
         let searchUrl = `https://api.spotify.com/v1/search?type=track&q=${term}`;
@@ -52,6 +57,8 @@ const Spotify = {
         })
     },
 
+    // POST request to save playlist to user's account
+
     savePlaylist(name, trackUris) {
         if (!name || !trackUris) {
             return;
@@ -77,7 +84,7 @@ const Spotify = {
             })
         }).then(response => {
             if (response.ok) {
-                response.json()
+                return response.json()
             }
         })
         .then(jsonResponse => playlistId = jsonResponse.id)
@@ -96,7 +103,3 @@ const Spotify = {
 };
 
 export default Spotify;
-
-function newFunction(response) {
-    console.log(response.json());
-}
